@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS event_genres;
     
 CREATE TABLE event_genres (
   id serial PRIMARY KEY,
-  event_genres VARCHAR(20) NULL DEFAULT NULL -- Music genres for events
+  event_genre VARCHAR(20) NULL DEFAULT NULL -- Music genres for events
 );
 
 -- ---
@@ -48,6 +48,25 @@ DROP TABLE IF EXISTS event_locations;
 CREATE TABLE event_locations (
   id serial PRIMARY KEY,
   event_location VARCHAR(20) NULL DEFAULT NULL -- Music event locations
+);
+
+-- ---
+-- Table 'Event Venues'
+-- Venue for events (address)
+-- ---
+
+DROP TABLE IF EXISTS event_venues;
+    
+CREATE TABLE event_venues (
+  id serial PRIMARY KEY,
+  venue_name VARCHAR(50) NULL DEFAULT NULL,
+  venue_address VARCHAR(20) NULL DEFAULT NULL,
+  venue_city VARCHAR(20) NULL DEFAULT NULL,
+  venue_state VARCHAR(15) NULL DEFAULT NULL,
+  venue_zip VARCHAR(10) NULL DEFAULT NULL,
+  venue_country VARCHAR(3) NULL DEFAULT NULL,
+  venue_latitude VARCHAR(30) NULL DEFAULT NULL,
+  venue_longitude VARCHAR(30) NULL DEFAULT NULL
 );
 
 -- ---

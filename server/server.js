@@ -11,10 +11,13 @@ const repeatRequest = ebStuff.repeatRequest;
 const publicPath = '../dist';
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'development';
+const getGenres = require('../database/insert-genres');
 console.log(repeatRequest);
 // const env = process.env.NODE_ENV || 'development';
 
 const formattedEvents = [];
+
+getGenres();
 
 app.use(express.static('dist/'));
 app.use(bodyParser.urlencoded({extended: true}));

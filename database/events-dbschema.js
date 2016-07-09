@@ -37,6 +37,22 @@ client.connect((err) => {
     );`
   );
 
+  // Create the venues table
+  client.query(`DROP TABLE IF EXISTS event_venues;`);
+  client.query(
+    `CREATE TABLE event_venues (
+      id serial PRIMARY KEY,
+      name VARCHAR(50),
+      address VARCHAR(20),
+      city VARCHAR(20),
+      state VARCHAR(15),
+      zip VARCHAR(10),
+      country VARCHAR(3),
+      latitude VARCHAR(30),
+      longitude VARCHAR(30) NULL DEFAULT NULL
+    );`
+  );
+
   // Foreign Keys
   client.query(
     `ALTER TABLE events 
