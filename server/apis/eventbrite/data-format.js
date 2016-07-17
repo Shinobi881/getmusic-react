@@ -5,6 +5,9 @@ const genreData = require('../../../eb-genres.json').subcategories;
 
 // Create a short description
 const descrFormat = (descr) => {
+  if (!descr) {
+    return 'No description'
+  }
   return descr.substring(0, 300);
 };
 
@@ -46,6 +49,7 @@ const formatEvents = (event) => {
     start: event.start,
     end: event.end,
     venue: event.venue,
+    city: event.venue.address.city,
     logo: event.logo,
     url: event.url,
     performer: 'Artist'
@@ -53,10 +57,10 @@ const formatEvents = (event) => {
 };
 
 // Format Eventbrite API data
-const genreFormat = (events, collection) => {
+const eventFormat = (events, collection) => {
   const newEvents = events.forEach((event, index) => {
     collection.push(formatEvents(event));   
   });
 };
 
-module.exports = genreFormat;
+module.exports = eventFormat;

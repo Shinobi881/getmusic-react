@@ -14,7 +14,7 @@ class TopBar extends Component {
   }
   render () {
     return (
-      <div className='top-bar' id='example-menu'>
+      <div className='top-bar hide-for-small' id='example-menu'>
         <div className='top-bar-left'>
           <ul className='dropdown menu' data-dropdown-menu>
             <li className='menu-text top-bar-title'><img src='/logo5.png' /></li>

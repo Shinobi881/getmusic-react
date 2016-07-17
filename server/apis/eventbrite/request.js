@@ -5,9 +5,9 @@ if (env === 'development') {
 }
 const axios = require('axios');
 const dataFormat = require('./data-format.js');
+const getLocations = require('../../../database/insert/insert-locations');
 const EVENTBRITE_KEY = process.env.EVENTBRITE_KEY;
 const EVENTBRITE_URL = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=date&venue.city=San+Francisco&venue.region=CA&categories=103&expand=venue&token=';
-// 
 const SEARCH_URL = '?sort_by=date&location.address=1451+7th+St%2C+Oakland%2C+CA+94607&location.within=50mi&venue.region=CA&categories=103&start_date.range_start='
 const BASE = 'https://www.eventbriteapi.com/v3/events/search/';
 
@@ -27,22 +27,14 @@ const createQuery = (id, base, key) => {
 };
 // Pass in the formatted events Array
 const repeatRequest = (stuff, arr) => {
+    // console.log('Logging', stuff);
     let count = 0;  
     let page_count = stuff.pagination.page_count;
+    let object_count = stuff.pagination.object_count;
     let currentPage = stuff.pagination.page_number;
     let THIS_DATE = stuff.events[stuff.events.length - 1].start.local;
     console.log(THIS_DATE);
-    let END_DATE = '2016-09-08T20:00:00';
-    //console.log(END_DATE);
-    //console.log(url);
-    // console.log(currentPage);
-    // The new query url with the id added
     
-    // Check the page_size
-    if (THIS_DATE === END_DATE) {
-      console.log(true);
-      return
-    }
     const makeRequest = () => {
       page_count++;
       if (currentPage >= page_count) {
@@ -57,11 +49,8 @@ const repeatRequest = (stuff, arr) => {
         .then(() => {
           makeRequest();
         });
-
     }
-
-    makeRequest();
-    
+    makeRequest();    
 }
 
 
@@ -81,6 +70,7 @@ const repeatRequest = (stuff, arr) => {
 //   };
 // };
 
+
 const ebFetch = (arr, other) => {
   // console.log(arr[0]);
   return (req, res, next) => {
@@ -92,12 +82,15 @@ const ebFetch = (arr, other) => {
 
     axios.get(eventbrite)
       .then((response) => {
-        arr.length = 0;
+        // arr.length = 0;
         dataFormat(response.data.events, arr);
         return response;
       })
       .then((that) => {
         repeatRequest(that.data, arr);
+      })
+      .then(() => {
+        getLocations(arr);
       })
       .catch((err) => {
         console.log(err);

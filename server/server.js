@@ -1,4 +1,6 @@
 // require('dotenv').config();
+// require('babel-register');
+// require('babel-polyfill');
 const express = require('express')
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -11,13 +13,16 @@ const repeatRequest = ebStuff.repeatRequest;
 const publicPath = '../dist';
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'development';
-const getGenres = require('../database/insert-genres');
-console.log(repeatRequest);
-// const env = process.env.NODE_ENV || 'development';
 
 const formattedEvents = [];
 
-getGenres();
+// ############ DATABASE STUFF ##################
+// const createTables = require('../database/create/events-dbschema');
+// const getGenres = require('../database/insert/insert-genres');
+// createTables();
+// getGenres();
+
+
 
 app.use(express.static('dist/'));
 app.use(bodyParser.urlencoded({extended: true}));

@@ -18,7 +18,7 @@ const insertGenres = (json) => {
   json.subcategories
     .forEach((genre, index) => {
       client.query(
-        `INSERT INTO event_genres (id, event_genre, event_api_key)
+        `INSERT INTO event_genres (event_genre_id, event_genre, event_api_key)
         VALUES ($1, $2, $3)`, [index, genre.name, genre.id],
         (err) => {
           if (err) throw err;
